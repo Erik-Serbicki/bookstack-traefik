@@ -1,0 +1,49 @@
+services:
+  bookstack:
+    image: lscr.io/linuxserver/bookstack:latest 
+    container_name: bookstack
+    networks:
+      - default
+      - traefik-public
+    environment:
+      PUID: [[PUID]]
+      GUID: [[GUID]]
+      APP_URL: https://bookstack.local.serbicki.com
+      DB_HOST: [[DB_HOSTNAME]]
+      DB_USERNAME: [[DB_USERNAME]]
+      DB_PASSWORD: [[DB_PASSWORD]]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bookstack.entrypoints=http"
+      - "traefik.http.routers.bookstack.rule=Host(`bookstack.local.serbicki.com`)"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.middlewares.routers.middlewares=traefik-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.bookstack.middlewares=traefik-https-redirect"
+      - "traefik.http.routers.bookstack-secure.entrypoints=https"
+      - "traefik.http.routers.bookstack-secure.rule=Host(`bookstack.local.serbicki.com`)"
+      - "traefik.http.routers.bookstack-secure.tls=true"
+      - "traefik.http.routers.bookstack-secure.tls.certresolver=letsencrypt"
+    restart: unless-stopped
+    depends_on:
+      bookstack_db:
+        condition: service_healthy
+
+  bookstack_db:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: bookstack_db
+    networks:
+      - default
+    environment:
+      PUID: [[PUID]]
+      GUID: [[GUID]]
+      MYSQL_ROOT_PASSWORD: [[DB_ROOT_PASSWORD]] 
+      MYSQL_DATABASE: [[DB_HOSTNAME]]
+      MYSQL_USER: [[DB_USERNAME]]
+      MYSQL_PASSWORD: [[DB_PASSWORD]]
+    volumes:
+      - /data/bookstack/database:/config
+    restart: unless-stopped
+
+networks:
+  traefik-public:
+    external: true
