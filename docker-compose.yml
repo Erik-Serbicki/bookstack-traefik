@@ -12,6 +12,8 @@ services:
       DB_HOST: ${DB_HOSTNAME}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 6875:80
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bookstack.entrypoints=http"
