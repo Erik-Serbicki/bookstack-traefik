@@ -6,12 +6,12 @@ services:
       - default
       - traefik-public
     environment:
-      PUID: [[PUID]]
-      GUID: [[GUID]]
+      PUID: ${PUID}
+      GUID: ${GUID}
       APP_URL: https://bookstack.local.serbicki.com
-      DB_HOST: [[DB_HOSTNAME]]
-      DB_USERNAME: [[DB_USERNAME]]
-      DB_PASSWORD: [[DB_PASSWORD]]
+      DB_HOST: ${DB_HOSTNAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bookstack.entrypoints=http"
@@ -34,12 +34,12 @@ services:
     networks:
       - default
     environment:
-      PUID: [[PUID]]
-      GUID: [[GUID]]
-      MYSQL_ROOT_PASSWORD: [[DB_ROOT_PASSWORD]] 
-      MYSQL_DATABASE: [[DB_HOSTNAME]]
-      MYSQL_USER: [[DB_USERNAME]]
-      MYSQL_PASSWORD: [[DB_PASSWORD]]
+      PUID: ${PUID}
+      GUID: ${GUID}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD} 
+      MYSQL_DATABASE: ${DB_HOSTNAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - /data/bookstack/database:/config
     restart: unless-stopped
