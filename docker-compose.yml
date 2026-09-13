@@ -24,9 +24,6 @@ services:
       - "traefik.http.routers.bookstack-secure.tls=true"
       - "traefik.http.routers.bookstack-secure.tls.certresolver=letsencrypt"
     restart: unless-stopped
-    depends_on:
-      bookstack_db:
-        condition: service_healthy
 
   bookstack_db:
     image: lscr.io/linuxserver/mariadb:latest
