@@ -7,12 +7,13 @@ services:
       - traefik-public
     environment:
       PUID: ${PUID}
-      GUID: ${GUID}
+      PGID: ${GUID}
       APP_URL: https://bookstack.local.serbicki.com
       APP_KEY: ${APP_KEY}
       DB_HOST: bookstack_db
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: bookstackapp
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-public"
@@ -24,7 +25,7 @@ services:
       - "traefik.http.routers.bookstack-secure.rule=Host(`bookstack.local.serbicki.com`)"
       - "traefik.http.routers.bookstack-secure.tls=true"
       - "traefik.http.routers.bookstack-secure.tls.certresolver=letsencrypt"
-      #- "traefik.http.services.bookstack.loadbalancer.server.port=80"
+      - "traefik.http.services.bookstack.loadbalancer.server.port=80"
     restart: unless-stopped
 
   bookstack_db:
@@ -34,7 +35,7 @@ services:
       - default
     environment:
       PUID: ${PUID}
-      GUID: ${GUID}
+      PGID: ${GUID}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD} 
       MYSQL_DATABASE: bookstackapp
       MYSQL_USER: ${DB_USERNAME}
