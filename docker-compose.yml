@@ -12,8 +12,6 @@ services:
       DB_HOST: ${DB_HOSTNAME}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - 6875:8080
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bookstack.entrypoints=http"
@@ -25,6 +23,7 @@ services:
       - "traefik.http.routers.bookstack-secure.rule=Host(`bookstack.local.serbicki.com`)"
       - "traefik.http.routers.bookstack-secure.tls=true"
       - "traefik.http.routers.bookstack-secure.tls.certresolver=letsencrypt"
+      - "traefik.http.services.bookstack.loadbalancer.server.port=80"
     restart: unless-stopped
 
   bookstack_db:
