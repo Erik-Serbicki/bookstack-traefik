@@ -14,6 +14,10 @@ services:
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: bookstackapp
+    volumes:
+      - /mnt/nfs/bookstack/images:/config/www/images
+      - /mnt/nfs/bookstack/uploads:/config/www/uploads
+      - /mnt/nfs/bookstack/files:/config/www/files
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-public"
