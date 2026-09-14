@@ -6,11 +6,11 @@ services:
       - default
       - traefik-public
     environment:
-      PUID: ${PUID}
-      GUID: ${GUID}
+      UID: ${PUID}
+      GID: ${GUID}
       APP_URL: https://bookstack.local.serbicki.com
       APP_KEY: ${APP_KEY}
-      DB_HOST: ${DB_HOSTNAME}
+      DB_HOST: bookstack_db
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
     labels:
@@ -33,10 +33,10 @@ services:
     networks:
       - default
     environment:
-      PUID: ${PUID}
-      GUID: ${GUID}
+      UID: ${PUID}
+      GID: ${GUID}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD} 
-      MYSQL_DATABASE: ${DB_HOSTNAME}
+      MYSQL_DATABASE: bookstackapp
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
